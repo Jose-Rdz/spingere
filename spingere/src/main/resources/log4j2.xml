@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60">
+    <Properties>
+        <Property name="app-package">com.spingere</Property>
+        <Property name="log-path">C:/log_apps/spingere</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console-Appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>>
+            </PatternLayout>
+        </Console>
+        <File name="App-File-Appender" fileName="${log-path}/marco2018.log" >
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="${app-package}" level="info" additivity="false">
+            <AppenderRef ref="App-File-Appender"/>
+            <AppenderRef ref="Console-Appender"/>
+         </Logger>
+         <Logger name="org.hibernate" level="info" additivity="false">
+             <AppenderRef ref="Console-Appender" />
+         </Logger>
+         <Logger name="org.hibernate.SQL" level="debug" additivity="false">
+             <AppenderRef ref="Console-Appender" />
+         </Logger>
+         <Logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+             <AppenderRef ref="Console-Appender" />
+         </Logger>
+        <Root>
+            <AppenderRef ref="Console-Appender"/>
+        </Root>
+    </Loggers>
+</Configuration>

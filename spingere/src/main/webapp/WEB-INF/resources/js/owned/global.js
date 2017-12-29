@@ -2,22 +2,9 @@
 
 var GLOBAL = {
     APP_CONTEXT: '/spingere',
-    notify: function(title, msg) {
-        w2popup.open({
-            title: title,
-            body: '<div class="w2ui-centered">' + msg + '</div>',
-            buttons: '<button class="ui primary button btn" onclick="w2popup.close();">Aceptar</button>',
-            width: 400,
-            height: 200,
-            overflow: 'hidden',
-            color: '#333',
-            speed: '0.3',
-            opacity: '0.8',
-            modal: true,
-            showClose: false,
-            showMax: false
-        });
-    }
+    notify: notify,
+    showLoader: showLoader,
+    hideLoader: hideLoader    
 };
 
 $(function() {
@@ -51,3 +38,21 @@ function showLoader() {
 function hideLoader() {
     $('#requestLoader').removeClass('active');
 }
+
+function notify(title, msg) {
+    w2popup.open({
+        title: title,
+        body: '<div class="w2ui-centered">' + msg + '</div>',
+        buttons: '<button class="ui primary button btn" onclick="w2popup.close();">Aceptar</button>',
+        width: 400,
+        height: 200,
+        overflow: 'hidden',
+        color: '#333',
+        speed: '0.3',
+        opacity: '0.8',
+        modal: true,
+        showClose: false,
+        showMax: false
+    });
+}
+    

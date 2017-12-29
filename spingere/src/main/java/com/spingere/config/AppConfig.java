@@ -1,19 +1,21 @@
 package com.spingere.config;
 
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.hibernate.cfg.AvailableSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -88,11 +90,12 @@ public class AppConfig {
     }
     
     @Bean
-    public ResourceBundleMessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setDefaultEncoding("utf-8");
-        messageSource.setBasename("messages");
-        messageSource.setUseCodeAsDefaultMessage(true);
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasenames("classpath:/messages");
+        messageSource.setUseCodeAsDefaultMessage(false);
+        messageSource.setCacheSeconds((int) TimeUnit.HOURS.toSeconds(1));
+        messageSource.setFallbackToSystemLocale(false);
         return messageSource;
     }
     

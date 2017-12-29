@@ -1,6 +1,6 @@
 package com.spingere.validator;
 
-import com.spingere.dto.UserDto;
+import com.spingere.dto.UsuarioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -8,16 +8,16 @@ import org.springframework.validation.Validator;
 
 /**
  *
- * @author G13380
+ * @author Jose-Rdz
  */
 @Service
-public class UserDtoValidator implements Validator {
+public class UsuarioDtoValidator implements Validator {
 
     private @Autowired Validator springValidatorAdapter;
     
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserDto.class.isAssignableFrom(clazz);
+        return UsuarioDto.class.isAssignableFrom(clazz);
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author G13380
  */
-public class UserDto implements Serializable {
+public class UsuarioDto implements Serializable {
 
     private static final long serialVersionUID = -6823629936403129846L;
 
@@ -34,10 +34,10 @@ public class UserDto implements Serializable {
         
     private Integer tipoCliente;
 
-    public UserDto() {
+    public UsuarioDto() {
     }
 
-    public UserDto(String usuario, String nombre, String apPaterno, String apMaterno, String email, String contrasena, Integer tipoCliente) {
+    public UsuarioDto(String usuario, String nombre, String apPaterno, String apMaterno, String email, String contrasena, Integer tipoCliente) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
@@ -47,7 +47,7 @@ public class UserDto implements Serializable {
         this.tipoCliente = tipoCliente;
     }
 
-    public UserDto(Integer idUsuario, String usuario, String nombre, String apPaterno, String apMaterno, String email, String contrasena, Integer tipoCliente) {
+    public UsuarioDto(Integer idUsuario, String usuario, String nombre, String apPaterno, String apMaterno, String email, String contrasena, Integer tipoCliente) {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
         this.nombre = nombre;

@@ -1,3 +1,7 @@
+body {
+    background-color: #FFFAFA;
+}
+
 /*--------------
   Sidebar Button
 ---------------*/
@@ -36,7 +40,6 @@
 .launch.button .icon {
   margin-left: 0px;
 }
-
 
 .fixed.launch.button .text {
   position: absolute;

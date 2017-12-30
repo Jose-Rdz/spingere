@@ -49,32 +49,13 @@ public class UsuariosController {
         logger.info("-----> Guardando usuario...");
         JSONResponse jr = new JSONResponse();
         try {
-            /*
-            BindingResult br = new BeanPropertyBindingResult(dto, UsuarioDto.class.getName());
-            userDtoValidator.validate(dto, br);
-            if (br.hasErrors()) {
-            logger.info("{{existen errores de validación}}", br.getAllErrors());
-            jr.setIsOk(false);
-            jr.setMessage("La información proporcionada para el cliente no es válida");
-            Map<String, String> errorsMap = new HashMap<>();
-            br.getFieldErrors().forEach((f) -> {
-            String fieldName = f.getField();
-            String message = messageSource.getMessage(f, null);
-            logger.info("Code: " + f.getCode() + ", Field: " + fieldName + ", Msg: " + message);
-            errorsMap.put(fieldName, message);
-            });
-            jr.setErrors(errorsMap);
-            return jr;
-            }*/
             Map<String, String> errorsMap = spingereUtils.invokeValidator(dto, UsuarioDto.class, userDtoValidator);
-            
             if (!errorsMap.isEmpty()) {                
                 jr.setIsOk(false);
                 jr.setMessage("La información proporcionada para el cliente no es válida");
                 jr.setErrors(errorsMap);
                 return jr;
             }
-            
             userService.saveUsuario(dto);
             jr.setIsOk(true);
             jr.setMessage("El registro ha sido guardado correctamente");

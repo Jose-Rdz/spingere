@@ -65,7 +65,6 @@
                     </div>
                 </div>
             </form>
-            <div class="ui hidden divider"></div>
             <div class="ui right aligned basic segment">
                 <button id="btnGuardar" class="ui teal left labeled icon button">
                     <i class="save icon"></i>

@@ -13,7 +13,7 @@
         </style>
     </head>
     <body onload='document.login.user.focus();'>
-        <div class="ui middle aligned center aligned grid" style="margin-top: 3em;">
+        <div class="ui middle aligned center aligned grid">
             <div class="column">
                 <div class="ui basic segment">
                     <h1 class="ui center aligned icon header">

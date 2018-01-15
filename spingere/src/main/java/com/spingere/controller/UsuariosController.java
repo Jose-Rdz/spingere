@@ -33,7 +33,7 @@ public class UsuariosController {
 
     private @Autowired SpingereUtils spingereUtils;
     private @Autowired UsuarioService userService;
-    private @Autowired Validator userDtoValidator;
+    private @Autowired Validator usuarioDtoValidator;
     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView main() {
@@ -49,7 +49,7 @@ public class UsuariosController {
         logger.info("-----> Guardando usuario...");
         JSONResponse jr = new JSONResponse();
         try {
-            Map<String, String> errorsMap = spingereUtils.invokeValidator(dto, UsuarioDto.class, userDtoValidator);
+            Map<String, String> errorsMap = spingereUtils.invokeValidator(dto, UsuarioDto.class, usuarioDtoValidator);
             if (!errorsMap.isEmpty()) {                
                 jr.setIsOk(false);
                 jr.setMessage("La información proporcionada para el cliente no es válida");

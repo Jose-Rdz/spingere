@@ -1,11 +1,15 @@
 package com.spingere.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -39,6 +43,12 @@ public class Usuario implements Serializable {
     
     @Column
     private boolean activo;
+    
+    @ManyToMany
+    @JoinTable(name = "clienteusuario", 
+            joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"),
+            inverseJoinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente"))
+    private List<Cliente> clientes;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -104,9 +114,17 @@ public class Usuario implements Serializable {
         this.activo = activo;
     }
 
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "idUsuario=" + idUsuario + ", usuario=" + usuario + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", contrasena=" + contrasena + ", correoUsuario=" + correoUsuario + ", activo=" + activo + '}';
+        return "Usuario{" + "idUsuario=" + idUsuario + ", usuario=" + usuario + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", contrasena=" + contrasena + ", correoUsuario=" + correoUsuario + ", activo=" + activo + ", clientes=" + clientes + '}';
     }
 
 }

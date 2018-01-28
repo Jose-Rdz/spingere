@@ -31,7 +31,8 @@
     <body>
         <div class="ui small vertical inverted grey sidebar labeled icon menu left">
             <a href="${contextPath}" class="item"><i class="home icon"></i> Home</a>
-            <a href="${contextPath}/users" class="item"><i class="users icon"></i> Usuarios</a>
+            <a href="${contextPath}/usuarios" class="item"><i class="users icon"></i> Usuarios</a>
+            <a href="${contextPath}/graficas" class="item"><i class="bar chart icon"></i></i> Gráficas</a>
             <a href="${contextPath}/carga" class="item"><i class="upload icon"></i> Carga Archivos</a>
             <a href="${contextPath}" class="item"><i class="setting icon"></i> Configuración</a>
         </div>

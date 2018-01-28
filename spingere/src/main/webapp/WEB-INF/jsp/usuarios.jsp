@@ -9,7 +9,7 @@
     <head>
         <c:set var="contextPath" value="${pageContext.servletContext.contextPath}" />
         <title>Usuarios</title>
-        <script src="${contextPath}/resources/js/owned/users.js"></script>
+        <script src="${contextPath}/resources/js/owned/usuarios.js"></script>
     </head>
     <body>
         <c:if test="${pageContext.request.userPrincipal.name != null}">

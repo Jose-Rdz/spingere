@@ -26,7 +26,7 @@ import com.spingere.service.UsuarioService;
  * @author Jose-Rdz
  */
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/usuarios")
 public class UsuariosController {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuariosController.class);
@@ -37,7 +37,7 @@ public class UsuariosController {
     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("usuarios");
         LocalDate hoy = LocalDate.now();
         mv.addObject("fecha", hoy.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(new Locale("es", "MX"))));
         return mv;

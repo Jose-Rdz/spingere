@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  *
@@ -34,17 +36,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // asegurar las urls deseadas
         http.authorizeRequests()
                 .antMatchers("/", "/resources/**", "/login**").permitAll()
-                .antMatchers("/users").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/users/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/users").failureUrl("/login?error")
-                .usernameParameter("user")
-                .passwordParameter("pass")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/usuarios").failureUrl("/login?error")
+                .usernameParameter("user").passwordParameter("pass")
                 .and()
                 .logout().logoutSuccessUrl("/login?logout");
+        
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/login")
+                .sessionFixation().migrateSession()
+                .maximumSessions(1);
     }
     
     @Override
@@ -61,6 +66,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

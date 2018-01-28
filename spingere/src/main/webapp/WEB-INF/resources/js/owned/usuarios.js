@@ -20,7 +20,7 @@ function getTipoCliente() {
 
     $.getJSON(GLOBAL.APP_CONTEXT + '/cat/tipo-cliente').done(function (response) {
         if (!response.isOk) {
-            GLOBAL.GLOBAL.notify("<i class='icon warning circle red'></i>Error", response.message);
+            GLOBAL.notify("<i class='icon warning circle red'></i>Error", response.message);
         }
         $.each(response.info, function (i, data) {
             dropdown.append($('<option></option>').attr('value', data.idCliente).text(data.cliente + " - " + data.razonSocialCliente));
@@ -147,7 +147,7 @@ function usuariosTable() {
 
 function saveUser() {
     $.ajax({
-        url: GLOBAL.APP_CONTEXT + '/users/save',
+        url: GLOBAL.APP_CONTEXT + '/usuarios/save',
         contentType: 'application/json',
         async: false,
         type: "POST",

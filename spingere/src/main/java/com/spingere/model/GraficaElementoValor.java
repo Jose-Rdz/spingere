@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @author Jose-Rdz
  */
 @Entity
-@Table(name = "graficaelementovalor")
+@Table(name = "GraficaElementoValor")
 @IdClass(GraficaElementoValorPK.class)
 public class GraficaElementoValor implements Serializable {
 

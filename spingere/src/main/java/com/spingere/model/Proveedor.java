@@ -10,10 +10,10 @@ import javax.persistence.Table;
 
 /**
  *
- * @author AnGeL
+ * @author Jose-Rdz
  */
 @Entity
-@Table(name = "proveedor")
+@Table(name = "Proveedor")
 public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 2841586404136521771L;

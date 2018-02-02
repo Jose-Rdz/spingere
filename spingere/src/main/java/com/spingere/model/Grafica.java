@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Jose-Rdz
  */
 @Entity
-@Table(name = "grafica")
+@Table(name = "Grafica")
 public class Grafica implements Serializable {
 
     private static final long serialVersionUID = -2844680721178538895L;

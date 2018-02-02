@@ -2,10 +2,15 @@ package com.spingere.controller;
 
 import com.spingere.service.CargaDatosService;
 import com.spingere.utils.SpingereException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,28 +22,39 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/carga")
 public class CargaDatosController {
     
+    private static final Logger logger = LoggerFactory.getLogger(CargaDatosController.class);
+    private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    
     private @Autowired CargaDatosService cargaDatosService;
     
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String main() {
         return "carga_datos";
     }
     
-    @RequestMapping(value = "/xls", method = RequestMethod.POST)
-    public void readXls(@RequestParam("xlsFile") MultipartFile file) {
+    @PostMapping("/xlsx")
+    public ResponseEntity<Object> readXlsx(@RequestParam("xlsxFile") MultipartFile file) {
         try {
-            cargaDatosService.cargaDatosFromXls(file);
+            if (file == null) {
+                return new ResponseEntity<>("¡No se ha seleccionado ningún archivo!", HttpStatus.BAD_REQUEST);
+            }
+            
+            String contentType = file.getContentType();
+            
+            if (contentType == null) {
+                return new ResponseEntity<>("El archivo no posee una extensión de archivo válida [.xlsx]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+            }
+            
+            if (!contentType.equals(XLSX_MIME_TYPE)) {
+                return new ResponseEntity<>("Formato de archivo no soportado, se requiere [.xlsx]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+            }
+            
+            cargaDatosService.cargaDatosFromXlsx(file);
+            
+            return new ResponseEntity<>("¡La información se ha guardado correctamente!", HttpStatus.OK);
+            
         } catch (SpingereException ex) {
-            // TODO completar funcionalidad
-        }
-    }
-    
-    @RequestMapping(value = "/xlsx", method = RequestMethod.POST)
-    public void readXlsx(@RequestParam("xlsxFile") MultipartFile file) {
-        try {
-            cargaDatosService.cargaDatosFromXls(file);
-        } catch (SpingereException ex) {
-            // TODO completar funcionalidad
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     

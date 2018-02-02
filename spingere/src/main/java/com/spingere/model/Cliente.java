@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "Cliente")
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = -7827456836744806751L;
@@ -30,7 +30,7 @@ public class Cliente implements Serializable {
     private String razonSocialCliente;
     
     @ManyToMany
-    @JoinTable(name = "clienteproyecto", 
+    @JoinTable(name = "ClienteProyecto", 
             joinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente"),
             inverseJoinColumns = @JoinColumn(name = "idProyecto", referencedColumnName = "idProyecto"))
     private List<Proyecto> proyectos;

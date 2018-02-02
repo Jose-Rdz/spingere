@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  *
- * @author AnGeL
+ * @author Jose-Rdz
  */
 public class SubtipoMetricaPK implements Serializable {
 
@@ -14,8 +14,12 @@ public class SubtipoMetricaPK implements Serializable {
     private Integer idSubtipoMetrica;
     private Integer idTipoMetrica;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public SubtipoMetricaPK() {
+    }
+
+    public SubtipoMetricaPK(Integer idSubtipoMetrica, Integer idTipoMetrica) {
+        this.idSubtipoMetrica = idSubtipoMetrica;
+        this.idTipoMetrica = idTipoMetrica;
     }
 
     public Integer getIdSubtipoMetrica() {
@@ -49,10 +53,7 @@ public class SubtipoMetricaPK implements Serializable {
         if (!Objects.equals(this.idSubtipoMetrica, other.idSubtipoMetrica)) {
             return false;
         }
-        if (!Objects.equals(this.idTipoMetrica, other.idTipoMetrica)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idTipoMetrica, other.idTipoMetrica);
     }
 
     @Override

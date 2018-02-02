@@ -6,6 +6,7 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Map;
 import com.spingere.dto.UsuarioDto;
+import com.spingere.service.UsuarioService;
 import com.spingere.utils.JSONResponse;
 import com.spingere.utils.SpingereException;
 import com.spingere.utils.SpingereUtils;
@@ -14,12 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.spingere.service.UsuarioService;
 
 /**
  *
@@ -35,7 +36,7 @@ public class UsuariosController {
     private @Autowired UsuarioService userService;
     private @Autowired Validator usuarioDtoValidator;
     
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ModelAndView main() {
         ModelAndView mv = new ModelAndView("usuarios");
         LocalDate hoy = LocalDate.now();
@@ -44,7 +45,7 @@ public class UsuariosController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping("/save")
     public JSONResponse saveUser(@RequestBody UsuarioDto dto) {
         logger.info("-----> Guardando usuario...");
         JSONResponse jr = new JSONResponse();

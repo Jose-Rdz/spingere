@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CargaDatosService {
     
     /**
-     * Realiza la carga masiva de métricas a la DB desde un archivo xls
-     * @param file archivo xls
+     * Realiza la carga masiva de métricas a la DB desde un archivo xlsx
+     * @param file archivo xlsx
      * @throws SpingereException 
      */
-    void cargaDatosFromXls(MultipartFile file) throws SpingereException;
+    void cargaDatosFromXlsx(MultipartFile file) throws SpingereException;
     
 }

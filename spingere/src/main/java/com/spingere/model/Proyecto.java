@@ -10,14 +10,14 @@ import javax.persistence.Table;
 
 /**
  *
- * @author AnGeL
+ * @author Jose-Rdz
  */
 @Entity
-@Table(name = "proyecto")
+@Table(name = "Proyecto")
 public class Proyecto implements Serializable {
 
     private static final long serialVersionUID = -1045944191890006765L;
-    
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,15 @@ public class Proyecto implements Serializable {
     @Column
     private String descripcionProyecto;
 
+    public Proyecto() {
+    }
+
+    public Proyecto(Integer idProyecto, String proyecto, String descripcionProyecto) {
+        this.idProyecto = idProyecto;
+        this.proyecto = proyecto;
+        this.descripcionProyecto = descripcionProyecto;
+    }
+    
     public Integer getIdProyecto() {
         return idProyecto;
     }

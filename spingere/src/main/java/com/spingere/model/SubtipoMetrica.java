@@ -13,10 +13,10 @@ import javax.persistence.Table;
 
 /**
  *
- * @author AnGeL
+ * @author Jose-Rdz
  */
 @Entity
-@Table(name = "subtipometrica")
+@Table(name = "SubtipoMetrica")
 @IdClass(SubtipoMetricaPK.class)
 public class SubtipoMetrica implements Serializable {
 
@@ -36,7 +36,7 @@ public class SubtipoMetrica implements Serializable {
 
     @Column
     private String nmonicoMetrica;
-        
+
     @ManyToOne
     @JoinColumn(name = "idTipoMetrica", referencedColumnName = "idTipoMetrica", insertable = false, updatable = false)
     private TipoMetrica tipoMetrica;

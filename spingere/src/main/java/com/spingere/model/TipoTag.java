@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Jose-Rdz
  */
 @Entity
-@Table(name = "tipotag")
+@Table(name = "TipoTag")
 public class TipoTag implements Serializable {
     
     @Id

@@ -2,18 +2,18 @@ package com.spingere.controller;
 
 import com.spingere.service.CatalogoService;
 import com.spingere.service.GraficaService;
+import com.spingere.service.UsuarioService;
+import com.spingere.utils.JSONResponse;
+import com.spingere.utils.SpingereException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import com.spingere.service.UsuarioService;
-import com.spingere.utils.JSONResponse;
-import com.spingere.utils.SpingereException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -27,7 +27,7 @@ public class GraficasController {
     private @Autowired CatalogoService catalogoService;
     private @Autowired UsuarioService usuariosService;
     
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ModelAndView main() throws SpingereException {
         ModelAndView mv = new ModelAndView("graficas");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -38,7 +38,7 @@ public class GraficasController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/display", method = RequestMethod.GET)
+    @GetMapping("/display")
     public JSONResponse graficaHtml(
             @RequestParam("c") Integer idCliente, 
             @RequestParam("p") Integer idProyecto,

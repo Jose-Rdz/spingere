@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author AnGeL
+ * @author Jose-Rdz
  */
 @Entity
 @Table(name = "tipometrica")
@@ -25,6 +25,14 @@ public class TipoMetrica implements Serializable {
     
     @Column
     private String tipoMetrica;
+
+    public TipoMetrica() {
+    }
+
+    public TipoMetrica(Integer idTipoMetrica, String tipoMetrica) {
+        this.idTipoMetrica = idTipoMetrica;
+        this.tipoMetrica = tipoMetrica;
+    }
 
     public Integer getIdTipoMetrica() {
         return idTipoMetrica;

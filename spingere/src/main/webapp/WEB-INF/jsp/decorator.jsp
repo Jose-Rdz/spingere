@@ -47,7 +47,7 @@
                     Dimensionamiento y Estimación Profesional de Software
                 </div>   
             </header>
-            <main class="ui container">
+                <main class="ui container" style="padding: 1em 0;">
                 <sitemesh:write property='body' />
             </main>
             <div class="ui section divider"></div>

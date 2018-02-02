@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author AnGeL
  */
 @Entity
-@Table(name = "metrica")
+@Table(name = "Metrica")
 @IdClass(MetricaPK.class)
 public class Metrica implements Serializable {
 
@@ -43,14 +43,6 @@ public class Metrica implements Serializable {
     
     @Column
     private LocalDateTime fechaMetrica;
-    
-    /*
-    @OneToMany
-    @JoinColumns({
-        @JoinColumn(name = "idSubtipoMetrica", referencedColumnName = "idSubtipoMetrica", insertable = false, updatable = false),
-        @JoinColumn(name = "idTipoMetrica", referencedColumnName = "idTipoMetrica", insertable = false, updatable = false)
-    })
-    List<SubtipoMetrica> subtiposMetrica;*/
 
     public Integer getIdProyecto() {
         return idProyecto;
@@ -107,15 +99,7 @@ public class Metrica implements Serializable {
     public void setFechaMetrica(LocalDateTime fechaMetrica) {
         this.fechaMetrica = fechaMetrica;
     }
-/*
-    public List<SubtipoMetrica> getSubtiposMetrica() {
-        return subtiposMetrica;
-    }
-
-    public void setSubtiposMetrica(List<SubtipoMetrica> subtiposMetrica) {
-        this.subtiposMetrica = subtiposMetrica;
-    }
-*/
+    
     @Override
     public String toString() {
         return "Metrica{" + "idProyecto=" + idProyecto + ", idTipoMetrica=" + idTipoMetrica + ", idSubtipoMetrica=" + idSubtipoMetrica + ", valorMetrica=" + valorMetrica + ", valorEnteroMetrica=" + valorEnteroMetrica + ", valorDecimalMetrica=" + valorDecimalMetrica + ", fechaMetrica=" + fechaMetrica + '}';

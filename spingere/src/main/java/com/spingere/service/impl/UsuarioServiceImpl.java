@@ -39,32 +39,29 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional(rollbackFor = SpingereException.class)
     public void saveUsuario(UsuarioDto dto) throws SpingereException {
         try {
-            logger.debug("dto = " + dto.toString());
-            //Guarda / Actualiza Usuario
-            Usuario user = new Usuario();
-            Integer idUsuario = dto.getIdUsuario(); 
-            user.setApellidoPaterno(dto.getApPaterno());
-            user.setApellidoMaterno(dto.getApMaterno());
-            user.setContrasena(passwordEncoder.encode(dto.getContrasena()));
-            user.setUsuario(dto.getUsuario());
-            user.setNombre(dto.getNombre());
-            user.setCorreoUsuario(dto.getEmail()); 
-            if (idUsuario != null) {
-                user.setIdUsuario(idUsuario);
-            }
-            logger.debug(user.toString());
-            usuarioRepository.saveAndFlush(user);
+            logger.info("dto={}", dto);
+            
+            Usuario usuario = new Usuario();
+            usuario.setIdUsuario(dto.getIdUsuario());
+            usuario.setApellidoPaterno(dto.getApPaterno());
+            usuario.setApellidoMaterno(dto.getApMaterno());
+            usuario.setContrasena(passwordEncoder.encode(dto.getContrasena()));
+            usuario.setUsuario(dto.getUsuario());
+            usuario.setNombre(dto.getNombre());
+            usuario.setCorreoUsuario(dto.getEmail()); 
+            usuario.setActivo(true);
+            
+            logger.info("usuario={}", usuario);
+            
+            usuarioRepository.saveAndFlush(usuario);
             
             //Guarda la relación con el cliente
             ClienteUsuario newCU = new ClienteUsuario(); 
             newCU.setIdCliente(dto.getTipoCliente());
-            newCU.setIdUsuario(user.getIdUsuario());
-            if (dto.getTipoCliente().equals(1)) {
-                newCU.setIdRolUsuario(1);
-            } else {
-                newCU.setIdRolUsuario(2);
-            }
-            cuRepository.save(newCU); 
+            newCU.setIdUsuario(usuario.getIdUsuario());
+            newCU.setIdRolUsuario(dto.getTipoCliente().equals(1) ? 1 : 2);
+            cuRepository.saveAndFlush(newCU);
+            
             logger.info("{{ usuario guardado correctamente }}");
         } catch (RuntimeException re) {
             logger.error("{{ usuario no registrado en DB }}", re);

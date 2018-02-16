@@ -46,8 +46,8 @@ public class Usuario implements Serializable {
     
     @ManyToMany
     @JoinTable(name = "ClienteUsuario", 
-            joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"),
-            inverseJoinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente"))
+            joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", insertable = false, updatable = false))
     private List<Cliente> clientes;
 
     public Integer getIdUsuario() {

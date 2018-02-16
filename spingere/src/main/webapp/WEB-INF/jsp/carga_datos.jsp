@@ -7,7 +7,7 @@
         <script src="${contextPath}/resources/js/owned/carga_datos.js"></script>
     </head>
     <body>
-        <h3>Cargar información desde archivo xls</h3>
+        <h3>Cargar información desde archivo <i>xlsx</i></h3>
         <form class="ui form" action="<c:url value='/xlsx' />" enctype="multipart/form-data" method="POST">
             <div class="two fields">
                 <div class="field">

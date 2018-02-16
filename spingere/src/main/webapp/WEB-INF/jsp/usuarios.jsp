@@ -12,16 +12,7 @@
         <script src="${contextPath}/resources/js/owned/usuarios.js"></script>
     </head>
     <body>
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <div class="ui clearing basic segment">
-                <h4 class="ui left floated header">${fecha}</h4>
-                <a href="javascript:document.getElementById('logout').submit()" class="ui right floated teal icon button">
-                    <i class="power icon"></i>
-                    Cerrar Sesión
-                </a>
-            </div>
-        </c:if>        
-        <div id="grid-clientes" style="height: 220px;"></div>        
+        <div id="grid-clientes" style="height: 220px;"></div>
         <div id="divFormaAlta" style="display: none;">        
             <div class="ui hidden divider"></div>
             <form id="formUser" class="ui segment form">                            
@@ -72,9 +63,5 @@
                 </button>                
             </div>
         </div>
-        <%-- spring security logout --%>
-        <form id="logout" action="<c:url value='/logout' />" method="POST" >
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        </form>
     </body>
 </html>

@@ -8,8 +8,7 @@
         <script src="${contextPath}/resources/js/owned/graficas.js"></script>
     </head>
     <body>
-        <div class="ui hidden divider"></div>
-        <h2 class="ui dividing header">Ver gráficas</h2>
+        <h2 class="ui header">Ver gráficas</h2>
         <div class="ui rised segment form">
             <div class="three fields">
                 <div class="field">
@@ -39,9 +38,5 @@
             </div>
         </div>
         <div id="displayGrafica" class="ui rised segment" style="display: none;"></div>
-        <%-- spring security logout --%>
-        <form id="logout" action="<c:url value='/logout' />" method="POST" >
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        </form>
     </body>
 </html>

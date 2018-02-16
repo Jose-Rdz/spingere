@@ -3,6 +3,7 @@
 <%@page isELIgnored="false" %>
 <%@page contentType="text/html" pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -30,24 +31,40 @@
     </head>
     <body>
         <div class="ui small vertical inverted grey sidebar labeled icon menu left">
+            <security:authorize access="isAuthenticated()">
+                <div class="item">
+                    <i class="user circular icon"></i>
+                    @<security:authentication property="principal.username" />
+                </div>
+            </security:authorize>
             <a href="${contextPath}" class="item"><i class="home icon"></i> Home</a>
-            <a href="${contextPath}/usuarios" class="item"><i class="users icon"></i> Usuarios</a>
-            <a href="${contextPath}/graficas" class="item"><i class="bar chart icon"></i></i> Gráficas</a>
-            <a href="${contextPath}/carga" class="item"><i class="upload icon"></i> Carga Archivos</a>
-            <a href="${contextPath}" class="item"><i class="setting icon"></i> Configuración</a>
+            <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                <a href="${contextPath}/graficas" class="item"><i class="bar chart icon"></i></i> Gráficas</a>
+            </security:authorize>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
+                <a href="${contextPath}/usuarios" class="item"><i class="users icon"></i> Usuarios</a>
+                <a href="${contextPath}/carga" class="item"><i class="upload icon"></i> Carga Archivos</a>
+                <a href="${contextPath}" class="item"><i class="setting icon"></i> Configuración</a>
+            </security:authorize>
         </div>
         <div class="ui grey big launch right attached fixed button">
             <i class="content icon"></i>
             <span class="text">Menu</span>
         </div>
         <div class="pusher">
-            <header class="ui center aligned attached header">
+            <header class="ui center aligned header">
                 <img class="ui image" src="${contextPath}/resources/images/LogoSpingere.png" style="min-width:150px; max-width:15%; height:auto;" />
-                <div class="content">
-                    Dimensionamiento y Estimación Profesional de Software
-                </div>   
+                <div class="content">Dimensionamiento y Estimación Profesional de Software</div>
             </header>
-                <main class="ui container" style="padding: 1em 0;">
+            <main class="ui container" style="padding: 1em 0;">
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <div class="ui clearing basic segment">
+                        <a href="javascript:document.getElementById('logout').submit()" class="ui right floated basic teal circular icon button">
+                            <i class="power icon"></i>
+                            Cerrar Sesión
+                        </a>
+                    </div>
+                </c:if> 
                 <sitemesh:write property='body' />
             </main>
             <div class="ui section divider"></div>
@@ -60,5 +77,9 @@
         <div id="requestLoader" class="ui dimmer" style="opacity: 0.7">
             <div class="ui indeterminate large text loader">Espere un momento por favor.</div>
         </div>
+        <%-- spring security logout --%>
+        <form id="logout" action="<c:url value='/logout' />" method="POST" >
+            <security:csrfInput />
+        </form>
     </body>
 </html>

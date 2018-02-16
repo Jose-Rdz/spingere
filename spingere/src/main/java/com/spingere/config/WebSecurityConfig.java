@@ -38,12 +38,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/resources/**", "/login**").permitAll()
+                .antMatchers("/graficas**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/carga**", "/usuarios**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/usuarios").failureUrl("/login?error")
+                .formLogin().loginPage("/login")
+                .defaultSuccessUrl("/graficas").failureUrl("/login?error")
                 .usernameParameter("user").passwordParameter("pass")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout");
+                .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
         
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -57,8 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         try {
             JdbcDaoImpl jdbcDaoImpl = new JdbcDaoImpl();
             jdbcDaoImpl.setDataSource(appConfig.dataSource());
-            jdbcDaoImpl.setUsersByUsernameQuery("select usuario, contrasena, activo from usuario where usuario=?");
-            jdbcDaoImpl.setAuthoritiesByUsernameQuery("select u.usuario, ru.rolUsuario from usuario u, clienteusuario cu, rolusuario ru where u.idUsuario = cu.idUsuario and cu.idRolUsuario = ru.idRolUsuario and usuario=? and cu.idRolUsuario in( select distinct cu1.idRolUsuario from usuario u1, clienteusuario cu1 where u1.idUsuario = cu1.idUsuario and usuario=u.usuario);");
+            jdbcDaoImpl.setUsersByUsernameQuery("select usuario, contrasena, activo from Usuario where usuario=?");
+            jdbcDaoImpl.setAuthoritiesByUsernameQuery("select u.usuario, ru.rolUsuario from Usuario u, ClienteUsuario cu, RolUsuario ru where u.idUsuario = cu.idUsuario and cu.idRolUsuario = ru.idRolUsuario and usuario=? and cu.idRolUsuario in( select distinct cu1.idRolUsuario from Usuario u1, ClienteUsuario cu1 where u1.idUsuario = cu1.idUsuario and usuario=u.usuario);");
             return jdbcDaoImpl;
         } catch (NamingException ex) {
             logger.error("{{ no fue posible crear el validador de credenciales del sistema }}", ex);

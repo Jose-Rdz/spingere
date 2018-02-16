@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <html>
     <head>
         <title>Login</title>
@@ -56,7 +57,7 @@
                                 <input type='password' name='pass' placeholder="Contraseña" />
                             </div>
                         </div>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <security:csrfInput />
                         <button class="ui large teal fluid button" type="submit" tabindex="0">Ingresar</button>
                     </div>
                     <div class="ui message">

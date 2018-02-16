@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author Jose-Rdz
  */
-class GraficaElementoValorPK implements Serializable {
+public class GraficaElementoValorPK implements Serializable {
 
     private static final long serialVersionUID = -5583151153522768181L;
     

@@ -24,7 +24,9 @@ public class CargaDatosController {
     
     private static final Logger logger = LoggerFactory.getLogger(CargaDatosController.class);
     private static final String XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    
+    private static final String XLSM_MIME_TYPE = "application/vnd.ms-excel.sheet.macroEnabled.12";
+    private static final String XLSM_MIME_TYPE2 = "application/vnd.ms-excel.sheet.macroenabled.12";
+
     private @Autowired CargaDatosService cargaDatosService;
     
     @GetMapping
@@ -42,11 +44,11 @@ public class CargaDatosController {
             String contentType = file.getContentType();
             
             if (contentType == null) {
-                return new ResponseEntity<>("El archivo no posee una extensión de archivo válida [.xlsx]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+                return new ResponseEntity<>("El archivo no posee una extensión de archivo válida [.xlsx, .xlsm]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
             
-            if (!contentType.equals(XLSX_MIME_TYPE)) {
-                return new ResponseEntity<>("Formato de archivo no soportado, se requiere [.xlsx]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+            if (!contentType.equals(XLSX_MIME_TYPE) && !contentType.equals(XLSM_MIME_TYPE) && !contentType.equals(XLSM_MIME_TYPE2)) {
+                return new ResponseEntity<>("Formato de archivo no soportado, se requiere [.xlsx, .xlsm]", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
             
             cargaDatosService.cargaDatosFromXlsx(file);

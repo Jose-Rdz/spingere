@@ -1,8 +1,3 @@
-<%-- 
-    Document   : catalogo_cliente
-    Created on : 15/07/2015, 10:50:32 AM
-    Author     : g13380
---%>
 <%@page isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>

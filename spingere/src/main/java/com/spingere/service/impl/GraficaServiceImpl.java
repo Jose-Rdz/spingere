@@ -1,7 +1,10 @@
 package com.spingere.service.impl;
 
+import com.spingere.dto.GraficaBarrasDto;
 import com.spingere.service.GraficaService;
 import com.spingere.utils.SpingereException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +27,72 @@ public class GraficaServiceImpl implements GraficaService {
     
     @PersistenceContext
     private EntityManager em;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GraficaBarrasDto> getDatosGraficaBarras(Integer idGrafica, Integer idSubtipoGrafica, Integer idProyecto) 
+            throws SpingereException {
+        logger.info("---> getDatosGraficaBarras grafica={}", idGrafica);
+        
+        //Reporte Est. Ind. Aprox y Med == 3         
+        String strQuery =""; 
+        strQuery = "SELECT s.nmonicoMetrica as nombre, m.valorMetrica as valor FROM Metrica m, SubtipoMetrica s " +
+                            "where m.idSubtipoMetrica = s.idSubtipoMetrica " +
+                            "	and m.idProyecto = :idProyecto " + 
+                            "   and m.idSubtipoMetrica in ";
+                
+        if (idSubtipoGrafica == 1) // Tamaño Funcional - CFP
+            strQuery += "	(31, 34, 37, 117); ";
+        else if (idSubtipoGrafica == 2) //Tamaño Funcional - CFP - Detalle
+            strQuery += "	(30, 31, 32, 33, 34, 35, 36, 37, 38, 117); ";         
+        else if (idSubtipoGrafica == 4)// Estimación Esfuerzo - HH
+            strQuery += "	(40, 42, 45, 118); ";
+        else if (idSubtipoGrafica == 5)// Estimación Esfuerzo - HH - Detalle
+            strQuery += "	(40, 41, 42, 43, 44, 45, 46, 118); ";         
+        else if (idSubtipoGrafica == 6)// Product Delivery Rate - PDR
+            strQuery += "	(53, 7, 57); ";         
+        else if (idSubtipoGrafica == 7)// Proveedor - Fases
+            strQuery += "	(64, 73, 82, 91, 100, 109, 120, 123, 126, 129, 132, 135); ";
+        else if (idSubtipoGrafica == 8)// Proveedor - Fases - Detalle
+            strQuery += "	(63, 64, 65, 72, 73, 74, 81, 82, 83, 90, 91, 92, 99, 100, 101, 108, 109, 110); ";
+        else if (idSubtipoGrafica == 9)// Cliente - Fases
+            strQuery += "	(67, 76, 85, 94, 103, 112, 120, 123, 126, 129, 132, 135); ";
+        else if (idSubtipoGrafica == 10)// Cliente - Fases - Detalle
+            strQuery += "	(66, 67, 68, 75, 76, 77, 84, 85, 86, 93, 94, 95, 102, 103, 104, 111, 112, 113); ";
+        else if (idSubtipoGrafica == 11)// Acordada - Fases
+            strQuery += "	(70, 79, 88, 97, 106, 115, 120, 123, 126, 129, 132, 135); ";
+        else if (idSubtipoGrafica == 12)// Acordada - Fases - Detalle
+            strQuery += "	(69, 70, 71, 78, 79, 80, 87, 88, 89, 96, 97, 98, 105, 106, 107, 114, 115, 116); ";
+        else if (idSubtipoGrafica == 13)// "Medición - Fases
+            strQuery += "	(120, 123, 126, 129, 132, 135); ";
+        else if (idSubtipoGrafica == 14)// "Medición - Fases - Detalle
+            strQuery += "	(119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136); ";
+        else if (idSubtipoGrafica == 15)// Tamaño funcional CFP
+            strQuery += "	(30, 31, 32, 33, 34, 35); ";
+        else if (idSubtipoGrafica == 16)// Estimación Esfuerzo HH
+            strQuery += "	(42, 138); ";
+        else if (idSubtipoGrafica == 17)// Esfuerzo por fase
+            strQuery += "	(79, 88, 97, 106, 115, 147, 156); ";
+        
+        try {
+            Query query = em.createNativeQuery(strQuery)                    
+                    .setParameter("idProyecto", idProyecto);
+            List<Object[]> results = query.getResultList();
+            
+            List<GraficaBarrasDto> datos = new ArrayList<>();
+            
+            results.stream().forEach(r -> {
+                datos.add(new GraficaBarrasDto((String) r[0], new BigDecimal((String) r[1])));
+            });
+            
+            logger.info("resultList={}", results);
+            
+            return datos;
+        } catch (RuntimeException re) {
+            logger.error("{error al recuperar la grafica desde DB}", re);
+            throw new SpingereException("No fue posible recuperar la gráfica");
+        }
+    }
     
     @Override
     @Transactional(readOnly = true)
@@ -107,6 +176,7 @@ public class GraficaServiceImpl implements GraficaService {
                 + "             Inner  Join valso_spingere. "
                 + "                         Grafica                 As   g "
                 + "                On    cp.idCliente               =      :idCliente "
+                + "                and   cp.idProyecto              =      :idProyecto "
                 + "             Inner  Join valso_spingere. "
                 + "                         GraficaElemento         As  ge "
                 + "                On     g.idGrafica               =   ge.idGrafica "

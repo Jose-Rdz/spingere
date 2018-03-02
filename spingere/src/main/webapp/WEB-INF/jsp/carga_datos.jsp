@@ -7,11 +7,11 @@
         <script src="${contextPath}/resources/js/owned/carga_datos.js"></script>
     </head>
     <body>
-        <h3>Cargar información desde archivo <i>xlsx</i></h3>
+        <h3>Cargar información desde archivo <i>xlsx/xlsm</i></h3>
         <form class="ui form" action="<c:url value='/xlsx' />" enctype="multipart/form-data" method="POST">
             <div class="two fields">
                 <div class="field">
-                    <input type="file" name="xlsxFile" accept=".xlsx" />
+                    <input type="file" name="xlsxFile" accept=".xlsx,.xlsm" />
                 </div>
                 <div class="field">
                     <button class="ui primary icon button" type="submit">
@@ -20,8 +20,6 @@
                     </button>
                 </div>
             </div>
-            <%-- spring security logout --%>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
         <div id="progressBar" class="ui indicating progress">
             <div class="bar">

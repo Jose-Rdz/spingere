@@ -70,6 +70,37 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
     
     @Override
+    @Transactional(rollbackFor = SpingereException.class)
+    public void deleteUsuario(Integer idUsuario, Integer idCliente) throws SpingereException {
+        try {
+            logger.info("usuario={}, cliente={}", idUsuario, idCliente);            
+            
+            Usuario usuario = new Usuario(idUsuario);
+            
+            ClienteUsuario newCU = new ClienteUsuario(); 
+            newCU.setIdCliente(idCliente);
+            newCU.setIdUsuario(idUsuario);
+            
+            if (idCliente.equals(1)) {
+                newCU.setIdRolUsuario(1);
+            } else {
+                newCU.setIdRolUsuario(2);
+            }          
+            
+            cuRepository.delete(newCU);            
+            cuRepository.flush();
+            
+            usuarioRepository.delete(usuario);
+            usuarioRepository.flush();
+            
+            logger.info("{{ usuario eliminado correctamente }}");
+        } catch (RuntimeException re) {
+            logger.error("{{ usuario no registrado en DB }}", re);
+            throw new SpingereException("No fue posible guardar el usuario...");
+        }
+    }
+    
+    @Override
     @Transactional(readOnly = true)
     public List<Cliente> getClientesUsuario(String usuario) {
         try {

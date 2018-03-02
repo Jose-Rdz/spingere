@@ -3,13 +3,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
-        <title>Gráficas</title>
+        <title>Modelos</title>
         <c:set var="contextPath" value="${pageContext.servletContext.contextPath}" />
-        <script src="${contextPath}/resources/js/owned/graficas.js"></script>
+        <script src="${contextPath}/resources/js/owned/modelos.js"></script>
         <script src="${contextPath}/resources/js/canvasjs.min.js"></script>
     </head>
     <body>
-        <h2 class="ui header">Ver gráficas</h2>
+        <h2 class="ui header">Modelos</h2>
         <div class="ui rised segment form">
             <div class="three fields">
                 <div class="field">
@@ -28,29 +28,16 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label>Gráficas</label>
-                    <select id="dGraficas" class="ui disabled dropdown">
-                        <option value="">Elija una gráfica...</option>
-                        <c:forEach items="${graficas}" var="g">
-                            <option value="${g.idGrafica}">${g.nombreGrafica}</option>
+                    <label>Modelos</label>
+                    <select id="dModelos" class="ui disabled dropdown">
+                        <option value="">Elija un modelo...</option>
+                        <c:forEach items="${modelos}" var="m" varStatus="status">
+                            <option value="${status.count}">${m}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
         </div>
-        <div id="displayGrafica" class="ui rised segment" style="display: none;"></div>
-        <div id="displayGraficaBarras" class="ui rised segment" style="display: none;">
-            <div class="ui rised segment form">
-                <div class="one field">
-                    <div class="field">
-                        <label>Gráfica</label>
-                        <select id="dTipoGraficaBarras" class="ui dropdown">
-                            <option value="">Elija una gráfica</option>                            
-                        </select>
-                    </div>
-                </div>
-            </div> 
-            <div id="chartContainer" style="height: 500px; width: 100%;"></div>
-        </div>
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     </body>
 </html>

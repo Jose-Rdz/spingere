@@ -35,6 +35,9 @@ public class DispatcherConfig implements WebMvcConfigurer {
         registry.addViewController("/access-denied")
                 .setStatusCode(HttpStatus.FORBIDDEN)
                 .setViewName("access_denied");
+        
+        registry.addViewController("/sao")
+                .setViewName("sao");
     }
     
     @Override

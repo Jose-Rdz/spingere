@@ -39,7 +39,10 @@
             </security:authorize>
             <a href="${contextPath}" class="item"><i class="home icon"></i> Home</a>
             <security:authorize access="hasAnyRole('ADMIN', 'USER')">
+                <a href="${contextPath}/sao" class="item"><i class="globe icon"></i></i> SAO - Ciclo de vida</a>
+                <a href="http://enki.work:80/MicroStrategy/servlet/mstrWeb?evt=3186&src=mstrWeb.3186&subscriptionID=55C3ED8811E81AA3C4310080EF45EC30&Server=172.31.20.42&Project=POC&Port=0&share=1" target="_blank" class="item"><i class="tasks icon"></i> Estimador</a>
                 <a href="${contextPath}/graficas" class="item"><i class="bar chart icon"></i></i> Gráficas</a>
+                <a href="${contextPath}/modelos" class="item"><i class="area chart icon"></i></i> Modelos</a>
             </security:authorize>
             <security:authorize access="hasRole('ROLE_ADMIN')">
                 <a href="${contextPath}/usuarios" class="item"><i class="users icon"></i> Usuarios</a>
@@ -69,9 +72,11 @@
             </main>
             <div class="ui section divider"></div>
             <footer class="ui center aligned text container">
-                Spingere S.A. de C.V.<br/>
-                Contacto: <a href="mailto:fulanito@gmail.com">fulanito@gmail.com</a><br/>
-                Tel: 55-5555-55555<br/>
+                Insurgentes Sur 1431, piso 10<br/>                
+                Colonia Insurgentes Mixcoac, C.P. 03920<br/>
+                México, CDMX<br/>
+                Tel. +52 55 8852 2736<br/>
+                email: <a href="mailto:contacto@spingere.com.mx">contacto@spingere.com.mx</a><br/>                
             </footer>
         </div>
         <div id="requestLoader" class="ui dimmer" style="opacity: 0.7">

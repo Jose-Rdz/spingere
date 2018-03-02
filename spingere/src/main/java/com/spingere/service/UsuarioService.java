@@ -20,6 +20,14 @@ public interface UsuarioService {
     
     /**
      * 
+     * @param idUsuario
+     * @param idCliente
+     * @throws SpingereException 
+     */
+    void deleteUsuario(Integer idUsuario, Integer idCliente) throws SpingereException;
+    
+    /**
+     * 
      * @param usuario
      * @return 
      */

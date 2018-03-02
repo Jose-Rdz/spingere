@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,7 +18,6 @@ public class Cliente implements Serializable {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCliente;
 
     @Column
@@ -34,6 +31,15 @@ public class Cliente implements Serializable {
             joinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente"),
             inverseJoinColumns = @JoinColumn(name = "idProyecto", referencedColumnName = "idProyecto"))
     private List<Proyecto> proyectos;
+
+    public Cliente() {
+    }
+
+    public Cliente(Integer idCliente, String cliente, String razonSocialCliente) {
+        this.idCliente = idCliente;
+        this.cliente = cliente;
+        this.razonSocialCliente = razonSocialCliente;
+    }
 
     public Integer getIdCliente() {
         return idCliente;

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,6 +61,26 @@ public class UsuariosController {
             userService.saveUsuario(dto);
             jr.setIsOk(true);
             jr.setMessage("El registro ha sido guardado correctamente");
+            logger.info("--> ok");
+        } catch (SpingereException ex) {
+            logger.info("--> fail");
+            jr.setIsOk(false);
+            jr.setMessage(ex.getMessage());
+        }
+        return jr;
+    }
+    
+    @ResponseBody
+    @PostMapping("/delete")
+    public JSONResponse deleteUser(
+            @RequestParam("u") Integer idUsuario,
+            @RequestParam("c") Integer idCliente) {
+        logger.info("-----> Eliminando usuario...");
+        JSONResponse jr = new JSONResponse();
+        try {            
+            userService.deleteUsuario(idUsuario, idCliente);
+            jr.setIsOk(true);
+            jr.setMessage("El registro ha sido eliminado correctamente");
             logger.info("--> ok");
         } catch (SpingereException ex) {
             logger.info("--> fail");

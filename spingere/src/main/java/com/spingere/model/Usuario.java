@@ -50,6 +50,13 @@ public class Usuario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", insertable = false, updatable = false))
     private List<Cliente> clientes;
 
+    public Usuario() {
+    }
+
+    public Usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }

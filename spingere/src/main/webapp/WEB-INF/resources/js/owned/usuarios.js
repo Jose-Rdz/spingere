@@ -30,6 +30,32 @@ function getTipoCliente() {
     });
 }
 
+function deleteUser() {
+    var $gridClientes = w2ui['grid-clientes'];
+    var recId = $gridClientes.getSelection();
+    var registro = $gridClientes.get(recId)[0];        
+    $.ajax({
+        url: GLOBAL.APP_CONTEXT + '/usuarios/delete',
+        type: "POST",
+        data: {
+            u: registro.recid,
+            c: registro.idCliente            
+        }
+    }).done(function (response) {
+        if (!response.isOk) {
+            $.each(response.errors, function (k, v) {
+                showValidationErros(k, v);
+            });
+            GLOBAL.notify("<i class='icon warning circle red'></i>Error", response.message);
+            return;
+        }
+        $gridClientes.remove(registro.recid);
+        GLOBAL.notify("<i class='icon warning circle green'></i>Éxito", response.message);
+    }).fail(function () {
+        GLOBAL.notify("<i class='icon warning circle red'></i>Error", 'No fue posible enviar la petición...');
+    });
+}
+
 function fillFormUser() {
     var $gridClientes = w2ui['grid-clientes'];
     var recId = $gridClientes.getSelection();
@@ -76,7 +102,7 @@ function usuariosTable() {
                 onClick: function (target, data) {
                     var $formAlta = $('#divFormaAlta');
                     if (target === "eliminar") {
-                        console.log("boton eliminar");
+                        deleteUser();
                     } else if (target === "alta") {
                         $formAlta.show();
                     } else {
@@ -84,7 +110,7 @@ function usuariosTable() {
                         fillFormUser();
                     }
                 }
-            },
+            },            
             multiSelect: false,
             columns: [
                 {field: 'recid', caption: 'Id Usuario', size: '1%', hidden: true},
